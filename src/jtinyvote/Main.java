@@ -19,8 +19,10 @@ public class Main {
     
     static int CHOICES;
     static float[] choiceList;
+    static int[] voteList;
     static int chosenmap;
     static float value;
+    static int total;
     
     public static float[] getVotes(){
         Scanner input = new Scanner(System.in);
@@ -55,6 +57,26 @@ public class Main {
             }
         }
         return choiceList;
+    }
+    
+    public static int getVotes(int[] table){
+        for (int i=0;i<table.length;i++){
+            total=total+table[i];
+        }
+        return total;
+    }
+    
+    public static int[] getSumTable(int[] table){
+        if (table.length<2){
+            voteList = new int[1];
+            voteList[0]=getVotes(table);
+        }else{
+            voteList = table.clone();
+            for (int i=1;i<voteList.length;i++){
+                voteList[i]=voteList[i]+voteList[i-1];
+            }
+        }
+        return voteList;
     }
     
     public static float randomGen(){
