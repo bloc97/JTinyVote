@@ -5,10 +5,10 @@
  */
 
 
-// Note to add system preventing repeating choices in close votes. (such as 30/20/30/10 or 50/50 votes, etc.)
+// Note to add a system to prevent repeating choices in close votes. (such as 30/20/30/10 or 50/50 votes, etc.)
 // Currently if there are a lot of similar votes, some choices might be selected much more often.
-// 100% Randomness is not reliable nor acceptable.
-// Multipling the tables by 2 (or a bigger number) gives a higher chance to the most voted choice.
+// The current use of Randomness is not reliable nor acceptable.
+// Multipling the tables by 2 (or a bigger number) can give a higher chance to the most voted choice.
 package jtinyvote;
 
 import java.util.Random;
@@ -54,7 +54,7 @@ public class Main {
         return voteList;
     }
     
-    public static int randomGen(int total){ //Generates a random number between 0 and a max integer.
+    public static int getRandomGen(int total){ //Generates a random number between 0 and a max integer.
         Random random = new Random();
         return random.nextInt(total);
     }
@@ -88,7 +88,7 @@ public class Main {
         printTable(sumlist,"Sum Table: ");
         
         for (int i=0;i<10;i++){
-            int random = randomGen(votes);
+            int random = getRandomGen(votes);
             int choice = getChosen(sumlist, random);
             //System.out.println("Random: "+random);
             System.out.println("Choice: "+choice);
