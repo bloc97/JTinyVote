@@ -8,7 +8,8 @@
 // Note to add a system to prevent repeating choices in close votes. (such as 30/20/30/10 or 50/50 votes, etc.)
 // Currently if there are a lot of similar votes, some choices might be selected much more often.
 // The current use of Randomness is not reliable nor acceptable.
-// Multipling the tables by 2 (or a bigger number) can give a higher chance to the most voted choice.
+// Multipling the tables by 2 (or a bigger number) can give a higher chance to the most voted choice. 
+// But does not solve the problem of a lot of similar votes
 package jtinyvote;
 
 import java.util.Random;
