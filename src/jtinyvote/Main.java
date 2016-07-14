@@ -20,6 +20,7 @@ public class Main {
     static int CHOICES;
     static float[] choiceList;
     static int chosenmap;
+    static float value;
     
     public static float[] getVotes(){
         Scanner input = new Scanner(System.in);
@@ -28,18 +29,27 @@ public class Main {
         
         if (Main.CHOICES<2){
         choiceList = new float[1];
-        choiceList[1]=100F;
+        choiceList[0]=100F;
         } //Minimum 2
         else{
             choiceList = new float[Main.CHOICES];
             for (int i=0;i<Main.CHOICES;i++){
-                if (i==Main.CHOICES||choiceList[i-1]>=100){
+                if (i==Main.CHOICES-1){
                    choiceList[i]=100F;
                 }else{
-                    System.out.print("Enter vote percent for map "+(i+1)+": ");float value=input.nextFloat();
-                    if (value>=100){choiceList[i]=100F;}else{
-                        if (i<=0){choiceList[i]=value;}
-                        else{choiceList[i]=value+choiceList[i+1];}
+                    if (i<=0){
+                        System.out.print("Enter vote percent for map "+(i+1)+": ");value=input.nextFloat();
+                        if (value>100F){value=100F;}
+                        else{choiceList[i]=value;}
+                    }
+                    else if (choiceList[i-1]<100){
+                        System.out.print("Enter vote percent for map "+(i+1)+": ");value=input.nextFloat();
+                        value=value+choiceList[i-1];
+                        if (value>100F){value=100F;}
+                        else{choiceList[i]=value;}
+                    }
+                    else{
+                        choiceList[i]=100F;
                     }
                 }
             }
@@ -49,8 +59,8 @@ public class Main {
     
     public static float randomGen(){
         Random random = new Random();
-        Float value = random.nextFloat()*100;
-        return value;
+        float rand = random.nextFloat()*100;
+        return rand;
     }
     
     public static int getMap(float[] table, float value){
@@ -61,9 +71,6 @@ public class Main {
         }
         return chosenmap;
     }
-    
-    
-
     /**
      * @param args the command line arguments
      */
@@ -72,11 +79,7 @@ public class Main {
         
         choiceList=getVotes();
         
-        Scanner input = new Scanner(System.in);
-        
-        float random=randomGen();
-        chosenmap=getMap(choiceList, random);
-        System.out.println("The Chosen Map is: "+(chosenmap+1));
+        System.out.println("The Chosen Map is: "+(getMap(choiceList, randomGen())+1));
 
     }
     
