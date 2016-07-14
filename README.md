@@ -1,5 +1,5 @@
 # JTinyVote
-Very simple voting system that accounts for weight. Similar to JVote, but smaller
+Very simple voting system that accounts for weight, and uses a bit of randomness. Similar to JVote, but smaller
 
 In a simple voting system, only the choice with the highest number of votes win, but in this system, every choice that has at least one voter can win.
 
