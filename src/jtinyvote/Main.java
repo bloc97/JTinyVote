@@ -17,59 +17,31 @@ import java.util.Scanner;
  */
 public class Main {
     
-    static int CHOICES;
-    static float[] choiceList;
-    static int[] voteList;
-    static int chosenmap;
-    static float value;
-    static int total;
     
-    public static float[] getVotes(){
+    public static int[] inputVotes(){
         Scanner input = new Scanner(System.in);
-
-        System.out.print("Enter the number of choices: ");Main.CHOICES=input.nextInt();
-        
-        if (Main.CHOICES<2){
-        choiceList = new float[1];
-        choiceList[0]=100F;
-        } //Minimum 2
-        else{
-            choiceList = new float[Main.CHOICES];
-            for (int i=0;i<Main.CHOICES;i++){
-                if (i==Main.CHOICES-1){
-                   choiceList[i]=100F;
-                }else{
-                    if (i<=0){
-                        System.out.print("Enter vote percent for map "+(i+1)+": ");value=input.nextFloat();
-                        if (value>100F){value=100F;}
-                        else{choiceList[i]=value;}
-                    }
-                    else if (choiceList[i-1]<100){
-                        System.out.print("Enter vote percent for map "+(i+1)+": ");value=input.nextFloat();
-                        value=value+choiceList[i-1];
-                        if (value>100F){value=100F;}
-                        else{choiceList[i]=value;}
-                    }
-                    else{
-                        choiceList[i]=100F;
-                    }
-                }
-            }
+        System.out.println("Enter the number of choices: ");
+        int[] voteList = new int[input.nextInt()];
+        for (int i=0;i<voteList.length;i++){
+            System.out.print("Enter votes for choice "+i+": ");voteList[i]=input.nextInt();
         }
-        return choiceList;
+        return voteList;
     }
     
+    
     public static int getVotes(int[] table){
+        int total = 0;
         for (int i=0;i<table.length;i++){
             total=total+table[i];
         }
         return total;
     }
     
-    public static int[] getSumTable(int[] table){
+    public static int[] getSumTable(int[] table, int total){
+        int[] voteList;
         if (table.length<2){
             voteList = new int[1];
-            voteList[0]=getVotes(table);
+            voteList[0]=total;
         }else{
             voteList = table.clone();
             for (int i=1;i<voteList.length;i++){
@@ -79,29 +51,38 @@ public class Main {
         return voteList;
     }
     
-    public static float randomGen(){
+    public static int randomGen(int total){
         Random random = new Random();
-        float rand = random.nextFloat()*100;
-        return rand;
+        return random.nextInt(total);
     }
     
-    public static int getMap(float[] table, float value){
+    public static int getChosen(int[] table, float value){
+        int chosenmap = 0;
         for (int i=0;i<table.length;i++){
             if (value>table[i]){
-                chosenmap=i+1;
+                chosenmap = i;
             }
         }
         return chosenmap;
     }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
         
-        choiceList=getVotes();
+        int[] votelist = inputVotes();
+        int votes = getVotes(votelist);
+        int[] sumlist = getSumTable(votelist, votes);
         
-        System.out.println("The Chosen Map is: "+(getMap(choiceList, randomGen())+1));
+        
+        for (int i=0;i<10;i++){
+            int random = randomGen(votes);
+            int choice = getChosen(sumlist, random);
+            System.out.println(choice);
+        }
+        
 
     }
     
